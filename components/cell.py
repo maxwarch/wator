@@ -19,12 +19,12 @@ class Cell(Group):
         self.size = size
         self.position = position
         self.images = images
+        self.type = type
+        self.currentElement = None
         
         self.background = pg.sprite.Sprite(self)
         self.background.image = pg.Surface(size)
-        self.background.rect = pg.Rect(position, size)
-        
-        self.currentElement = None
+        self.rect = self.background.rect = pg.Rect(position, size)
 
         self.setType(type)
         
@@ -45,6 +45,12 @@ class Cell(Group):
             self.currentElement = Shark(self, self.images[type], self.position, self.size)
 
         self.render()
+
+    def onClick(self, event):
+        if self.type == 'fish' or self.type == None:
+            self.setType('shark')
+        else:
+            self.setType('fish')
 
     def render(self):
         self.update()

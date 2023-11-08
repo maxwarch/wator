@@ -1,28 +1,23 @@
-import os
 import pygame as pg
 
 from components.world import World
+from constants import *
 
 def main():
     pg.init()
-    screen = pg.display.set_mode((800, 600)) #, pg.RESIZABLE)
-
-    IMGS = {
-        'fish': pg.image.load(os.path.join('assets', 'poisson.png')).convert_alpha(),
-        'shark': pg.image.load(os.path.join('assets', 'requin.png')).convert_alpha()
-    }
+    screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) #, pg.RESIZABLE)
 
     clock = pg.time.Clock()
     running = True
 
-    w = World(screen, IMGS, width=screen.get_width(), height=screen.get_height()) 
-    w.render()
+    w = World(screen, imgs(), width=screen.get_width(), height=screen.get_height()) 
 
     while running:
         for event in pg.event.get():
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_DOWN:
-                    w.change()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                for i, cell in enumerate(w.flatCells):
+                    if cell.rect.collidepoint(event.pos):
+                        cell.onClick(event)
 
             if event.type == pg.QUIT:
                 running = False
