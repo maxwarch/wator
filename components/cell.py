@@ -12,18 +12,17 @@ colors = {
 }
 
 class Cell(Group):
-    def __init__(self, type: (Fish | Shark | None), images, x, y, width, height):
+    def __init__(self, screen, type: (Fish | Shark | None), images, position, size):
         super().__init__()
 
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+        self.screen = screen
+        self.size = size
+        self.position = position
         self.images = images
         
         self.background = pg.sprite.Sprite(self)
-        self.background.image = pg.Surface((width, height))
-        self.background.rect = pg.Rect(x, y, width, height)
+        self.background.image = pg.Surface(size)
+        self.background.rect = pg.Rect(position, size)
         
         self.currentElement = None
 
@@ -34,21 +33,19 @@ class Cell(Group):
         self.type = type
         self.background.image.fill(colors[self.type])
 
-        test = False
         if self.currentElement != None:
             self.currentElement.kill()
-            test = True
 
         self.currentElement = None
 
-        if test == False:
-            if(type == 'fish'):
-                self.currentElement = Fish(self, self.images[type], self.x, self.y, self.width, self.height)
+        if(type == 'fish'):
+            self.currentElement = Fish(self, self.images[type], self.position, self.size)
 
-            if(type == 'shark'):
-                self.currentElement = Shark(self, self.images[type], self.x, self.y, self.width, self.height)
-        
-        if self.sprites() and test:
-           for s in self.sprites():
-                print(s)
+        if(type == 'shark'):
+            self.currentElement = Shark(self, self.images[type], self.position, self.size)
 
+        self.render()
+
+    def render(self):
+        self.update()
+        self.draw(self.screen)
