@@ -81,9 +81,6 @@ class World:
             self.cells[prevRow][nextCol],
         ]
 
-        if cell.type == 'fish':
-            cellsAround = [cell for cell in cellsAround if cell.type == None]
-
         nextCell, reproduce, energy, params = cell.onUpdate(cellsAround)
         #print(params)
         if nextCell != None:
@@ -99,8 +96,6 @@ class World:
                     cell.setType(cellType)
 
                 nextCell.dirty = True
-
-        return cellsAround
 
     def update(self):
         for cell in self.flatCells:

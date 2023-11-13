@@ -8,15 +8,25 @@ from constants import NB_CHRONON_FISH_PREGNANCY
 class Fish(Sprite):
     def __init__(self, groups, image, position, size):
         super().__init__(groups)
+        self.size = size
         
         percent = 80
-        scaled = (percent * size[0])/100 if size[0] < size[1] else (percent * size[1])/100
-        image = pg.transform.smoothscale(image, (scaled, scaled))
-        self.image = image
-        self.rect = self.image.get_rect(center = (position[0] + size[0] / 2, position[1] + size[1] / 2))
+        self.scaled = (percent * size[0])/100 if size[0] < size[1] else (percent * size[1])/100
+        self.icon = pg.transform.smoothscale(image, (self.scaled, self.scaled))
+        self.image = pg.Surface(self.size)
+        self.rect = self.icon.get_rect(center = (position[0] + size[0] / 2, position[1] + size[1] / 2))
+        self.hide()
         self.setParams(pregnancy=NB_CHRONON_FISH_PREGNANCY)
 
+    def hide(self):
+        self.image.set_alpha(0)
+
+    def show(self):
+        self.image = self.icon
+        self.image.set_alpha(255)
+
     def moveRules(self, cellsAround):
+        cellsAround = [cell for cell in cellsAround if cell.type == None]
         if len(cellsAround) > 0:
             return cellsAround[randint(0, len(cellsAround) - 1)]
 

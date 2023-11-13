@@ -19,10 +19,10 @@ def main():
                 if event.key == pg.K_DOWN:
                     w.update()
 
-            # if event.type == pg.MOUSEBUTTONDOWN:
-            #     for i, cell in enumerate(w.flatCells):
-            #         if cell.rect.collidepoint(event.pos):
-            #             cell.onClick(event)
+            if event.type == pg.MOUSEBUTTONDOWN:
+                for i, cell in enumerate(w.flatCells):
+                    if cell.rect.collidepoint(event.pos):
+                        cell.onClick(event)
 
             if event.type == pg.QUIT:
                 running = False
@@ -34,7 +34,7 @@ def main():
         pg.event.pump()
         pg.time.delay(30)
         w.update()
-        print(clock.get_fps())
+        #print(clock.get_fps())
 
 if __name__ == '__main__':
     main()

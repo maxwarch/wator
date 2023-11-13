@@ -23,7 +23,6 @@ class Shark(Fish):
         return None
 
     def setEnergy(self):
-        #print('setEnergy', self.params)
         self.params['energy'] -= 1
 
         result = self.params['energy'] > 0

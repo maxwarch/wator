@@ -31,6 +31,11 @@ class Cell(Group):
         self.background.image = pg.Surface(size)
         self.rect = self.background.rect = pg.Rect(position, size)
 
+        self.elements = {
+            'fish': Fish(self, images['fish'], self.position, self.size),
+            'shark': Shark(self, images['shark'], self.position, self.size)
+        }
+
         self.setType(type)
 
     def setType(self, type: AnyStr | None, params = None):
@@ -38,24 +43,23 @@ class Cell(Group):
         self.background.image.fill(colors[self.type])
 
         if self.currentElement != None:
-            self.currentElement.kill()
+            self.currentElement.hide()
 
         self.currentElement = None
 
-        if type != 'other':
-            if(type == 'fish'):
-                self.currentElement = Fish(self, self.images[type], self.position, self.size)
-
-            if(type == 'shark'):
-                self.currentElement = Shark(self, self.images[type], self.position, self.size)
-
-            if type != None and params != None:
+        if type != None:
+            self.currentElement = self.elements[self.type]
+            self.currentElement.show()
+            if params != None:
                 self.currentElement.setParams(**params)
             
 
         self.render()
 
     def onUpdate(self, cellsAround: List[Self]):
+        if self.currentElement == None:
+            return None
+        
         return (
             self.currentElement.moveRules(cellsAround),
             self.currentElement.doReproduce(),
