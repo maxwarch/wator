@@ -50,8 +50,11 @@ class Cell(Group):
         if type != None:
             self.currentElement = self.elements[self.type]
             self.currentElement.show()
-            if params != None:
+            if params != None and params != 'new':
                 self.currentElement.setParams(**params)
+
+            if params == 'new':
+                self.currentElement.init()
             
 
         self.render()

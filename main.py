@@ -29,11 +29,13 @@ def main():
         
         pg.display.flip()
 
-        clock.tick(60)
+        clock.tick(FPS)
 
-        pg.event.pump()
-        pg.time.delay(30)
-        w.update()
+        if REFRESH_DELAY > 0:
+            pg.event.pump()
+            pg.time.delay(REFRESH_DELAY)
+            w.update()
+            
         #print(clock.get_fps())
 
 if __name__ == '__main__':

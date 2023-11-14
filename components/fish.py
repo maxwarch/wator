@@ -16,6 +16,9 @@ class Fish(Sprite):
         self.image = pg.Surface(self.size)
         self.rect = self.icon.get_rect(center = (position[0] + size[0] / 2, position[1] + size[1] / 2))
         self.hide()
+        self.init()
+        
+    def init(self):
         self.setParams(pregnancy=NB_CHRONON_FISH_PREGNANCY)
 
     def hide(self):
@@ -32,12 +35,12 @@ class Fish(Sprite):
 
         return None
     
-    def doReproduce(self):
+    def doReproduce(self, pregnancy=NB_CHRONON_FISH_PREGNANCY):
         self.params['pregnancy'] -= 1
 
         result = self.params['pregnancy'] == 0
         if result == True:
-            self.setParams(pregnancy=NB_CHRONON_FISH_PREGNANCY)
+            self.setParams(pregnancy=pregnancy)
 
         return result
 

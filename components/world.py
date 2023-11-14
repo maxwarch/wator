@@ -72,13 +72,13 @@ class World:
 
         cellsAround = [
             self.cells[row][nextCol],
-            self.cells[nextRow][nextCol],
+            #self.cells[nextRow][nextCol],
             self.cells[nextRow][col],
-            self.cells[nextRow][prevCol],
+            #self.cells[nextRow][prevCol],
             self.cells[row][prevCol],
-            self.cells[prevRow][prevCol],
+            #self.cells[prevRow][prevCol],
             self.cells[prevRow][col],
-            self.cells[prevRow][nextCol],
+            #self.cells[prevRow][nextCol],
         ]
 
         nextCell, reproduce, energy, params = cell.onUpdate(cellsAround)
@@ -93,7 +93,7 @@ class World:
                 cell.setType(None)
 
                 if reproduce:
-                    cell.setType(cellType)
+                    cell.setType(cellType, 'new')
 
                 nextCell.dirty = True
 
